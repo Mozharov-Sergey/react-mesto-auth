@@ -1,0 +1,7 @@
+.popup__container_fullscreen {
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+  max-width: 75vw;
+  max-height: 75vh;
+}

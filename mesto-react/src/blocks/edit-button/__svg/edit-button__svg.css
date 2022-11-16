@@ -1,0 +1,9 @@
+.edit-button__svg {
+}
+
+@media (max-width: 515px) {
+  .edit-button__svg {
+    width: 18px;
+    height: 18px;
+  }
+}

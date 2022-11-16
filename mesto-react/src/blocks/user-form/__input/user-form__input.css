@@ -1,0 +1,25 @@
+.user-form__input {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background-color: black;
+  color: #fff;
+  min-width: 358px;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 27px 0 13px;
+  
+}
+
+.user-form__input:focus {
+  outline: none;
+}
+
+
+@media (max-width: 380px) {
+  .user-form__input {
+    min-width: 300px;
+  }
+}

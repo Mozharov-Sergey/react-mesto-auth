@@ -1,0 +1,37 @@
+.header__sign-out {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #e5e5e5;
+  background-color: transparent;
+  border: none;
+  margin: 51px 0 46px 24px ;
+  cursor: pointer;
+  padding: 0;
+
+}
+
+@media  (max-width: 515px) {
+  .header__sign-out {
+    padding-right: 28px;
+  }
+}
+
+@media  (max-width: 450px) {
+  .header__sign-out {
+    font-size: 14px;
+    font-size: 14px;
+    line-height: 17px;
+
+  }
+}
+
+
+@media  (max-width: 400px) {
+  .header__sign-out {
+    margin: 51px 30px 46px auto;
+    padding: 0;
+  }
+}

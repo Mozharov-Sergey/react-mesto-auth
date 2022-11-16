@@ -1,0 +1,11 @@
+.popup__close_oneline {
+  top: -160px;
+  right: -75px;
+}
+
+/* @media (max-width: 515px) {
+  .popup__close {
+    top: -15 0px;
+    right: -50px;
+  }
+} */

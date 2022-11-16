@@ -1,0 +1,12 @@
+.profile__info-upper-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .profile__info-upper-line {
+    padding-left: 34px;
+  }
+}

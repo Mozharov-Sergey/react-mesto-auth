@@ -1,0 +1,11 @@
+.cards__card {
+  max-width: 282px;
+  max-height: 361px; /*Необходимо для корректного масштабирования изображений */
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+}

@@ -1,0 +1,10 @@
+.profile__info {
+}
+
+@media (max-width: 768px) {
+  .profile__info {
+    text-align: center;
+    padding-top: 23px;
+    padding-bottom: 36px;
+  }
+}
