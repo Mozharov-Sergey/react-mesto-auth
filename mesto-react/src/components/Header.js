@@ -8,13 +8,11 @@ export default function Header({ email, onLogout, isloggedIn, isRegisterOpen, is
 
   React.useEffect(() => {
     function handleScreenSizeChange() {
-      if(window.screen.width > 515) {
+      if (window.screen.width > 515) {
         setIsTabShow(false);
         setIsTabOpen(false);
-      }
-
-      else {
-        setIsTabShow(true)
+      } else {
+        setIsTabShow(true);
       }
     }
 
@@ -32,19 +30,21 @@ export default function Header({ email, onLogout, isloggedIn, isRegisterOpen, is
 
   return (
     <header className="header">
-      <div className={(isloggedIn && isTabOpen) && "header__mobile-user-section"}>
-        {isloggedIn && isTabOpen && <p className="header__email-mobile-section">{email}</p>}
-        {isloggedIn && isTabOpen && (
-          <button className="header__sign-out-mobile-section" onClick={onLogout}>
-            Выйти
-          </button>
-        )}
-      </div>
-      
+      {isloggedIn && isTabOpen && (
+        <div className="header__mobile-user-section">
+          {isloggedIn && isTabOpen && <p className="header__email-mobile-section">{email}</p>}
+          {isloggedIn && isTabOpen && (
+            <button className="header__sign-out-mobile-section" onClick={onLogout}>
+              Выйти
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="header__main">
         <img className="header__logo" src={logo} alt="Логотип Место Россия" />
 
-        {(isloggedIn && isTabIconShow && !isTabOpen) && (
+        {isloggedIn && isTabIconShow && !isTabOpen && (
           <button className="header__tab" type="click" onClick={handleOpenTab}>
             <div className="header__tab-line"></div>
             <div className="header__tab-line"></div>
@@ -52,7 +52,9 @@ export default function Header({ email, onLogout, isloggedIn, isRegisterOpen, is
           </button>
         )}
 
-        {isloggedIn && isTabOpen && <button className="header__close-tab-button" onClick={handleCloseTab}></button>}
+        {isloggedIn && isTabOpen && (
+          <button className="header__close-tab-button" onClick={handleCloseTab}></button>
+        )}
         {isloggedIn && !isTabIconShow && <p className="header__email">{email}</p>}
         {isloggedIn && !isTabIconShow && (
           <button className="header__sign-out" onClick={onLogout}>

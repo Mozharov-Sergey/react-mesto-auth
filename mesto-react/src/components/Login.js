@@ -3,8 +3,7 @@ import UserForm from './UserForm';
 import { useFormAndValidation } from '../hooks/useFormAndValidation';
 
 export default function Login({ onSubmit, onOpenClose }) {
-  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
-
+  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,22 +12,22 @@ export default function Login({ onSubmit, onOpenClose }) {
 
   React.useEffect(() => {
     setValues({ email: '', password: '' });
+    setIsValid(false);
   }, []);
-
 
   React.useEffect(() => {
     onOpenClose(true);
 
-    return(() => {
+    return () => {
       onOpenClose(false);
-    })
-  }, [])
+    };
+  }, []);
 
   // НЕ УВЕРЕН, ЧТО С ТОЧКИ ЗРЕНИЯ UX НУЖНА ВАЛИДАЦИЯ ИМЕННО ПРИ ВХОДЕ, НО
   // В КАЧЕСТВЕ ТРЕНИРОВКИ РЕШИЛ СДЕЛАТЬ
 
   return (
-    <UserForm title="Вход" buttonText="Войти" onSubmit={handleSubmit}>
+    <UserForm title="Вход" buttonText="Войти" onSubmit={handleSubmit} disabled={!isValid}>
       <input
         className={'user-form__input ' + (errors.email && 'user-form__input_error')}
         name="email"

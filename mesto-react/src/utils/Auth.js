@@ -17,7 +17,7 @@ class Auth {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка ${res.status}`);
+    return res.json().then((err) => Promise.reject(err));
   }
 
   signup(email, password) {
@@ -28,9 +28,7 @@ class Auth {
         password: password,
         email: email,
       }),
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => console.log(err));
+    }).then((res) => this._checkResponse(res));
   }
 
   signin(email, password) {
@@ -41,22 +39,18 @@ class Auth {
         password: password,
         email: email,
       }),
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => console.log(err));
+    }).then((res) => this._checkResponse(res));
   }
 
   getContent(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => console.log(err));
+    }).then((res) => this._checkResponse(res));
   }
 }
 

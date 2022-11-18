@@ -3,11 +3,12 @@ import UserForm from './UserForm';
 import { Link } from 'react-router-dom';
 import { useFormAndValidation } from '../hooks/useFormAndValidation';
 
-export default function Register({ onSubmit, onOpenClose, onInvalidSubmit}) {
-  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
+export default function Register({ onSubmit, onOpenClose }) {
+  const { values, handleChange, errors, isValid, setValues, resetForm, setIsValid } = useFormAndValidation();
 
   React.useEffect(() => {
     setValues({ email: '', password: '' });
+    setIsValid(false);
   }, []);
 
   React.useEffect(() => {
@@ -22,14 +23,17 @@ export default function Register({ onSubmit, onOpenClose, onInvalidSubmit}) {
     e.preventDefault();
     if (isValid) {
       onSubmit(values.email, values.password);
-    } else {
-      onInvalidSubmit(true);
     }
   }
 
   return (
     <>
-      <UserForm title="Регистрация" buttonText="Зарегистрироваться" onSubmit={handleSubmit}>
+      <UserForm
+        title="Регистрация"
+        buttonText="Зарегистрироваться"
+        onSubmit={handleSubmit}
+        disabled={!isValid}
+      >
         <input
           className={'user-form__input ' + (errors.email && 'user-form__input_error')}
           name="email"
@@ -55,7 +59,7 @@ export default function Register({ onSubmit, onOpenClose, onInvalidSubmit}) {
         {errors.password && <span className="user-form__error-message">{errors.password}</span>}
       </UserForm>
       <p className="user-form__is-registrated">
-        Уже зарегистрированы?&nbsp; 
+        Уже зарегистрированы?&nbsp;
         <Link to="/sign-in" className="user-form__is-registrated_type_link">
           Войти
         </Link>

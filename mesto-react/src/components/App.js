@@ -14,7 +14,7 @@ import InfoTooltip from './InfoTooltip.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRoute from './ProtectedRoute.js';
-import authApi from './Auth.js';
+import authApi from '../utils/Auth.js';
 
 function App() {
   const history = useHistory();
@@ -24,23 +24,23 @@ function App() {
   const [isImageFullSizePopupOpen, setIsImageFullSizePopupOpen] = React.useState(false);
   const [isAcceptionPopupOpened, setIsAcceptionPopupOpened] = React.useState(false);
   const [isInfoTooltipSuccessOpened, setIsInfoTooltipSuccessOpened] = React.useState(false);
-  const [isInfoTooltipSuccessError, setIsInfoTooltipSuccessError] = React.useState(false);
+  const [isInfoTooltipErrorOpened, setIsInfoTooltipErrorOpened] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [userEmail, setUserEmail] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [cardForDelete, setCardForDelete] = React.useState({});
   const [isloggedIn, setIsLoggedIn] = React.useState(false);
-  const [isRegisterComponentOpened, setIsRegisterComponentOpened] = React.useState(false)
+  const [isRegisterComponentOpened, setIsRegisterComponentOpened] = React.useState(false);
   const [isLoginComponentOpened, setIsLoginComponentOpened] = React.useState(false);
-  const [isInfoTooltipInvalidFormOpened, setIsInfoTooltipInvalidFormOpened] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   React.useEffect(() => {
-    tokenCheck()
+    tokenCheck();
   }, []);
 
   React.useEffect(() => {
-    if(isloggedIn) {
+    if (isloggedIn) {
       history.push('/');
       apiController
         .getInitialCards()
@@ -48,17 +48,15 @@ function App() {
           setCards(Array.from(res));
         })
         .catch((err) => console.log(err));
-  
-        apiController
+
+      apiController
         .getUserData()
         .then((res) => {
           setCurrentUser(res);
         })
         .catch((err) => console.log(err));
     }
-    
   }, [isloggedIn]);
-
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -156,31 +154,37 @@ function App() {
     setIsImageFullSizePopupOpen(false);
     setIsAcceptionPopupOpened(false);
     setIsInfoTooltipSuccessOpened(false);
-    setIsInfoTooltipSuccessError(false);
-    setIsInfoTooltipInvalidFormOpened(false);
+    setIsInfoTooltipErrorOpened(false);
   }
-
 
   function handleRegister(email, password) {
     authApi
       .signup(email, password)
       .then((res) => {
-        if(res) { 
+        if (res) {
           setIsInfoTooltipSuccessOpened(true);
           history.push('/sign-in');
         }
-        else {
-          setIsInfoTooltipSuccessError(true)
-        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsInfoTooltipErrorOpened(true);
+        setErrorMessage(err.message || err.error);
+        // Тут к разработчикам курса вопросы, почему при регистрации и входе разные названия полей с ошибками. error или message
+      });
   }
 
   function handleSignIn(email, password) {
-    authApi.signin(email, password).then((res) => {
-      localStorage.setItem('token', res.token);
-      setIsLoggedIn(true);
-    });
+    authApi
+      .signin(email, password)
+      .then((res) => {
+        localStorage.setItem('token', res.token);
+        setUserEmail(email);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        setIsInfoTooltipErrorOpened(true);
+        setErrorMessage(err.message || err.error); // Тут к разработчикам курса вопросы, почему при регистрации и входе разные названия полей с ошибками. error или message
+      });
   }
 
   function handleLogout() {
@@ -208,10 +212,16 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
-          <Header email={userEmail} onLogout={handleLogout} isloggedIn={isloggedIn} isRegisterOpen={isRegisterComponentOpened} isLoginOpen={isLoginComponentOpened} />
+          <Header
+            email={userEmail}
+            onLogout={handleLogout}
+            isloggedIn={isloggedIn}
+            isRegisterOpen={isRegisterComponentOpened}
+            isLoginOpen={isLoginComponentOpened}
+          />
           <Switch>
             <Route path="/sign-up">
-              <Register onSubmit={handleRegister} onOpenClose={setIsRegisterComponentOpened} onInvalidSubmit={setIsInfoTooltipInvalidFormOpened}/>
+              <Register onSubmit={handleRegister} onOpenClose={setIsRegisterComponentOpened} />
             </Route>
 
             <Route path="/sign-in">
@@ -219,6 +229,7 @@ function App() {
             </Route>
 
             <ProtectedRoute
+              exact
               path="/"
               isloggedIn={isloggedIn}
               component={Main}
@@ -262,34 +273,13 @@ function App() {
           />
 
           <InfoTooltip
-            isOpen={isInfoTooltipSuccessOpened}
-            message="Вы успешно зарегистрировались!"
+            isSuccess={isInfoTooltipSuccessOpened}
+            isError={isInfoTooltipErrorOpened}
+            message={errorMessage}
             name="info-tooltip-error"
             onClose={closeAllPopups}
-          >
-            <div className="popup__image-info-tooltip popup__image-info-tooltip_type_success "></div>
-          </InfoTooltip>
-
-          <InfoTooltip
-            isOpen={isInfoTooltipSuccessError}
-            message="Что-то пошло не так!Попробуйте ещё раз."
-            name="info-tooltip-error"
-            onClose={closeAllPopups}
-          >
-            <div className="popup__image-info-tooltip popup__image-info-tooltip_type_error"></div>
-          </InfoTooltip>
-
-          <InfoTooltip
-            isOpen={isInfoTooltipInvalidFormOpened}
-            message="Невалидные значения полей формы! Попробуйте ещё раз."
-            name="info-tooltip-error"
-            onClose={closeAllPopups}
-          >
-            <div className="popup__image-info-tooltip popup__image-info-tooltip_type_error"></div>
-          </InfoTooltip>
-
-
-
+            setMessage={setErrorMessage}
+          />
         </div>
       </div>
     </CurrentUserContext.Provider>
