@@ -52,6 +52,7 @@ function App() {
       apiController
         .getUserData()
         .then((res) => {
+          console.log(res)
           setCurrentUser(res);
         })
         .catch((err) => console.log(err));
