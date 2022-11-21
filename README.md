@@ -23,6 +23,8 @@
 ### `npm run build`
 Сборка приложения
 
+### `npm run deploy`
+
 
 ### Github Pages:
 https://mozharov-sergey.github.io/react-mesto-auth/
