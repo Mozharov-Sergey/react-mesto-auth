@@ -1,5 +1,5 @@
 export const authOptions = {
-  baseURL: 'https://auth.nomoreparties.co',
+  baseURL: 'http://localhost:3000',
   method: 'POST',
   headers: {
     Accept: 'application/json',
@@ -42,7 +42,8 @@ class Auth {
     }).then((res) => this._checkResponse(res));
   }
 
-  getContent(token) {
+  getContent() {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {

@@ -197,12 +197,12 @@ function App() {
     const jwt = localStorage.getItem('token');
     if (jwt) {
       return authApi
-        .getContent(jwt)
+        .getContent()
         .then((res) => {
           if (res) {
             setIsLoggedIn(true);
             history.push('/');
-            setUserEmail(res.data.email);
+            setUserEmail(res.email);
           }
         })
         .catch((err) => console.log(err));
