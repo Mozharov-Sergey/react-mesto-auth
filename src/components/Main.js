@@ -7,7 +7,6 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
 
   const currentUser = React.useContext(CurrentUserContext);
 
-
   return (
     <main className="content">
       <section className="profile">

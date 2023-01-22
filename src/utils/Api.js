@@ -1,4 +1,5 @@
 const apiOptions = {
+  // baseUrl: 'http://api.mazhar.students.nomoredomains.rocks',
   baseUrl: 'http://localhost:3000',
 };
 

@@ -27,6 +27,7 @@ function App() {
   const [isInfoTooltipErrorOpened, setIsInfoTooltipErrorOpened] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
+  const [avatar, setAvatar] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [cardForDelete, setCardForDelete] = React.useState({});
@@ -52,7 +53,8 @@ function App() {
       apiController
         .getUserData()
         .then((res) => {
-          console.log(res)
+          console.log(res.avatar)
+          console.log('xxx')
           setCurrentUser(res);
         })
         .catch((err) => console.log(err));

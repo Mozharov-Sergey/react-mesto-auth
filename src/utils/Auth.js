@@ -1,5 +1,6 @@
 export const authOptions = {
-  baseURL: 'http://localhost:3000',
+  // baseUrl: 'http://api.mazhar.students.nomoredomains.rocks',
+  baseUrl: 'http://localhost:3000',
   method: 'POST',
   headers: {
     Accept: 'application/json',
@@ -9,7 +10,7 @@ export const authOptions = {
 
 class Auth {
   constructor(authOptions) {
-    this._baseUrl = authOptions.baseURL;
+    this._baseUrl = authOptions.baseUrl;
     this._headers = authOptions.headers;
   }
 

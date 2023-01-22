@@ -8,7 +8,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [buttonTitle, setButtonTitle] = React.useState('Сохранить');
   const [isSubmitButtonActive, setIsSubmitButtonActive] = React.useState(false);
 
-  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
+  const { values, handleChange, errors, isValid, setValues,} = useFormAndValidation();
 
   React.useEffect(() => {
     setIsSubmitButtonActive(isValid);
@@ -54,7 +54,8 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
         />
 
-        <span className={errors.profileName !== '' && 'popup__error_visible'}>{errors.profileName}</span>
+        {/* <span className={errors.profileName !== '' && 'popup__error_visible'}>{errors.profileName}</span> */}
+        <span className={errors.profileName !== '' ? 'popup__error_visible' : ''}>{errors.profileName}</span>
       </div>
       <div className="popup__field-container">
         <input
@@ -70,9 +71,10 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
         />
 
-        <span className={errors.profileFunction !== '' && 'popup__error_visible'}>
+        {/* <span className={errors.profileFunction !== '' && 'popup__error_visible'}>
           {errors.profileFunction}
-        </span>
+        </span> */}
+        <span className={errors.profileFunction !== '' ? 'popup__error_visible' : ''}>{errors.profileFunction}</span>
       </div>
     </PopupWithForm>
   );
