@@ -27,7 +27,6 @@ function App() {
   const [isInfoTooltipErrorOpened, setIsInfoTooltipErrorOpened] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
-  const [avatar, setAvatar] = React.useState('');
   const [userEmail, setUserEmail] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [cardForDelete, setCardForDelete] = React.useState({});

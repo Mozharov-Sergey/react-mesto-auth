@@ -2,9 +2,15 @@ import React from 'react';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDelete, onCardLike, cards }) {
-  
-
+export default function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onCardDelete,
+  onCardLike,
+  cards,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
